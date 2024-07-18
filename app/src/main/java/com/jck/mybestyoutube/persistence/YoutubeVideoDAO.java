@@ -1,5 +1,6 @@
 package com.jck.mybestyoutube.persistence;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -9,6 +10,7 @@ import com.jck.mybestyoutube.model.YoutubeVideo;
 
 import java.util.List;
 
+@Dao
 public interface YoutubeVideoDAO {
 
     @Query("SELECT * FROM youtubevideo WHERE id = :id")
