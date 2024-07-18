@@ -14,10 +14,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
 import com.jck.mybestyoutube.model.YoutubeVideo;
+import com.jck.mybestyoutube.view.YoutubeVideoAdapter;
 
 import java.util.List;
 
@@ -26,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabAdd;
     private Context context;
     private static final String TAG = "MainActivity";
+    private RecyclerView rvYoutubeVideo;
+    private YoutubeVideoAdapter youtubeVideoAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         context = getApplicationContext();
         fabAdd = findViewById(R.id.fabSwitchAddTodo);
+        rvYoutubeVideo = findViewById(R.id.rvYoutubeVideo);
+        rvYoutubeVideo.setLayoutManager(new LinearLayoutManager(this));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -50,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         for (YoutubeVideo yv : youtubeVideos) {
             Log.d(TAG, yv.getTitre() + " (" + yv.getDescription() + ")");
         }
+        youtubeVideoAdapter = new YoutubeVideoAdapter(youtubeVideos);
+        rvYoutubeVideo.setAdapter(youtubeVideoAdapter);
     }
 
     @Override
