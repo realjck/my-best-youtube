@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">MyBestYouTube</string>
     <string name="add_youtube_video">Add Youtube Video</string>
+    <string name="placeholder_description">Description</string>
+    <string name="placeholder_url">url de la vidéo</string>
+    <string name="placeholder_titre">Titre de la vidéo</string>
+    <string name="btn_add">Ajouter</string>
+    <string name="btn_cancel">Annuler</string>
+    <string-array name="categories">
+        <item>Catégorie 1</item>
+        <item>Catégorie 2</item>
+        <item>Catégorie 3</item>
+    </string-array>
 </resources>
