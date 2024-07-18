@@ -3,6 +3,7 @@ package com.jck.mybestyoutube;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,13 +16,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
+import com.jck.mybestyoutube.model.YoutubeVideo;
 
-import java.util.Objects;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton fabAdd;
     private Context context;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fabAdd.setOnClickListener(view -> goAddYoutube());
+
+        List<YoutubeVideo> youtubeVideos = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().list();
+        for (YoutubeVideo yv : youtubeVideos) {
+            Log.d(TAG, yv.getTitre() + " (" + yv.getDescription() + ")");
+        }
     }
 
     @Override
