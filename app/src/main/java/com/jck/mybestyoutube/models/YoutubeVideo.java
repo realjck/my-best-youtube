@@ -9,23 +9,23 @@ public class YoutubeVideo {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
-    @ColumnInfo(name = "titre")
-    private String titre;
+    @ColumnInfo(name = "title")
+    private String title;
     @ColumnInfo(name = "description")
     private String description;
-    @ColumnInfo(name = "url")
-    private String url;
-    @ColumnInfo(name = "categorie")
-    private String categorie;
-    @ColumnInfo(name = "favori")
-    private Boolean favori;
+    @ColumnInfo(name = "youtube_id")
+    private String youtube_id;
+    @ColumnInfo(name = "category")
+    private String category;
+    @ColumnInfo(name = "favorite")
+    private Boolean favorite;
 
-    public YoutubeVideo(String titre, String description, String url, String categorie, Boolean favori) {
-        this.titre = titre;
+    public YoutubeVideo(String title, String description, String youtube_id, String category, Boolean favorite) {
+        this.title = title;
         this.description = description;
-        this.url = url;
-        this.categorie = categorie;
-        this.favori = favori;
+        this.youtube_id = youtube_id;
+        this.category = category;
+        this.favorite = favorite;
     }
     public YoutubeVideo() {
     }
@@ -38,12 +38,12 @@ public class YoutubeVideo {
         this.id = id;
     }
 
-    public String getTitre() {
-        return titre;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -54,27 +54,27 @@ public class YoutubeVideo {
         this.description = description;
     }
 
-    public String getUrl() {
-        return url;
+    public String getYoutube_id() {
+        return youtube_id;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setYoutube_id(String youtube_id) {
+        this.youtube_id = youtube_id;
     }
 
-    public String getCategorie() {
-        return categorie;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public Boolean getFavori() {
-        return favori;
+    public Boolean getFavorite() {
+        return favorite;
     }
 
-    public void setFavori(Boolean favori) {
-        this.favori = favori;
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 }

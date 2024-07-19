@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements YoutubeVideoRVAda
 
         youtubeVideos = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().list();
         for (YoutubeVideo yv : youtubeVideos) {
-            Log.d(TAG, yv.getTitre() + " (" + yv.getDescription() + ")");
+            Log.d(TAG, yv.getTitle() + " (" + yv.getDescription() + ")");
         }
         youtubeVideoRVAdapter = new YoutubeVideoRVAdapter(youtubeVideos);
         youtubeVideoRVAdapter.setOnFavoriteButtonClickListener(this);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements YoutubeVideoRVAda
 
     public void onFavoriteButtonClick(YoutubeVideo youtubeVideo) {
         // Toggle favorite
-        youtubeVideo.setFavori(!youtubeVideo.getFavori());
+        youtubeVideo.setFavorite(!youtubeVideo.getFavorite());
 
         // Update database
         YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().update(youtubeVideo);

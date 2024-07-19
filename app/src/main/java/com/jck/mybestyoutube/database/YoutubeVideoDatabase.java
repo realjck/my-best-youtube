@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.jck.mybestyoutube.models.YoutubeVideo;
 import com.jck.mybestyoutube.persistence.YoutubeVideoDAO;
 
-@Database(entities = {YoutubeVideo.class}, version = 1)
+@Database(entities = {YoutubeVideo.class}, version = 2)
 public abstract class YoutubeVideoDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "my_best_youtube";
 

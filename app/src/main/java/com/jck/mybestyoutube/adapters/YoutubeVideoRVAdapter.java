@@ -16,7 +16,7 @@ import java.util.List;
 
 public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAdapter.YoutubeVideoViewHolder> {
 
-    private List<YoutubeVideo> youtubeVideos;
+    private final List<YoutubeVideo> youtubeVideos;
     private OnFavoriteButtonClickListener mOnFavoriteButtonClickListener;
     public YoutubeVideoRVAdapter(List<YoutubeVideo> youtubeVideos) {
         this.youtubeVideos = youtubeVideos;
@@ -32,22 +32,19 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
     @Override
     public void onBindViewHolder(@NonNull YoutubeVideoViewHolder holder, int position) {
         YoutubeVideo currentYoutubeVideo = youtubeVideos.get(position);
-        holder.tvTitre.setText(currentYoutubeVideo.getTitre());
+        holder.tvTitre.setText(currentYoutubeVideo.getTitle());
         holder.tvDescription.setText(currentYoutubeVideo.getDescription());
 
         // Set favorite button image
-        if (currentYoutubeVideo.getFavori()) {
+        if (currentYoutubeVideo.getFavorite()) {
             holder.btnFavorite.setImageResource(R.drawable.ic_heart_black_on);
         } else {
             holder.btnFavorite.setImageResource(R.drawable.ic_heart_black_off);
         }
 
-        holder.btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnFavoriteButtonClickListener != null) {
-                    mOnFavoriteButtonClickListener.onFavoriteButtonClick(currentYoutubeVideo);
-                }
+        holder.btnFavorite.setOnClickListener(v -> {
+            if (mOnFavoriteButtonClickListener != null) {
+                mOnFavoriteButtonClickListener.onFavoriteButtonClick(currentYoutubeVideo);
             }
         });
     }
