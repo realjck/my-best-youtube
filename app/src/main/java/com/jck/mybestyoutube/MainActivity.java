@@ -19,19 +19,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
-import com.jck.mybestyoutube.model.YoutubeVideo;
-import com.jck.mybestyoutube.view.YoutubeVideoAdapter;
+import com.jck.mybestyoutube.models.YoutubeVideo;
+import com.jck.mybestyoutube.adapters.YoutubeVideoRVAdapter;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements YoutubeVideoRVAdapter.OnFavoriteButtonClickListener {
 
     private FloatingActionButton fabAdd;
     private Context context;
     private static final String TAG = "MainActivity";
     private RecyclerView rvYoutubeVideo;
-    private YoutubeVideoAdapter youtubeVideoAdapter;
-
+    private YoutubeVideoRVAdapter youtubeVideoRVAdapter;
+    private List<YoutubeVideo> youtubeVideos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
         fabAdd.setOnClickListener(view -> goAddYoutube());
 
-        List<YoutubeVideo> youtubeVideos = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().list();
+        youtubeVideos = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().list();
         for (YoutubeVideo yv : youtubeVideos) {
             Log.d(TAG, yv.getTitre() + " (" + yv.getDescription() + ")");
         }
-        youtubeVideoAdapter = new YoutubeVideoAdapter(youtubeVideos);
-        rvYoutubeVideo.setAdapter(youtubeVideoAdapter);
+        youtubeVideoRVAdapter = new YoutubeVideoRVAdapter(youtubeVideos);
+        youtubeVideoRVAdapter.setOnFavoriteButtonClickListener(this);
+        rvYoutubeVideo.setAdapter(youtubeVideoRVAdapter);
     }
 
     @Override
@@ -77,5 +78,19 @@ public class MainActivity extends AppCompatActivity {
     private void goAddYoutube() {
         Intent intent = new Intent(context, AddYoutubeActivity.class);
         startActivity(intent);
+    }
+
+    public void onFavoriteButtonClick(YoutubeVideo youtubeVideo) {
+        // Toggle favorite
+        youtubeVideo.setFavori(!youtubeVideo.getFavori());
+
+        // Update database
+        YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().update(youtubeVideo);
+
+        // Update favorite button image
+        int position = youtubeVideos.indexOf(youtubeVideo);
+        if (position != -1) {
+            youtubeVideoRVAdapter.notifyItemChanged(position);
+        }
     }
 }

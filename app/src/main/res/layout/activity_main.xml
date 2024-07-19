@@ -22,6 +22,7 @@
         android:layout_height="match_parent"
         android:padding="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="?attr/actionBarSize"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:context=".MainActivity"
         tools:layout_editor_absoluteX="0dp" />
@@ -30,15 +31,15 @@
         android:id="@+id/fabSwitchAddTodo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
         android:clickable="true"
         android:contentDescription="@string/add_youtube_video"
-        app:srcCompat="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.8"
-        android:backgroundTint="@color/red"
+        app:srcCompat="@android:drawable/ic_input_add"
 
         />
 
