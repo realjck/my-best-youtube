@@ -20,7 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
-import com.jck.mybestyoutube.models.YoutubeVideo;
+import com.jck.mybestyoutube.pojos.YoutubeVideo;
 
 public class AddYoutubeActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.jck.mybestyoutube.models;
+package com.jck.mybestyoutube.pojos;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

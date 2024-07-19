@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.jck.mybestyoutube.R;
-import com.jck.mybestyoutube.models.YoutubeVideo;
+import com.jck.mybestyoutube.pojos.YoutubeVideo;
 
 import java.util.List;
 

@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
-import com.jck.mybestyoutube.models.YoutubeVideo;
+import com.jck.mybestyoutube.pojos.YoutubeVideo;
 import com.jck.mybestyoutube.adapters.YoutubeVideoRVAdapter;
 
 import java.util.List;

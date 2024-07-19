@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.jck.mybestyoutube.models.YoutubeVideo;
+import com.jck.mybestyoutube.pojos.YoutubeVideo;
 import com.jck.mybestyoutube.persistence.YoutubeVideoDAO;
 
 @Database(entities = {YoutubeVideo.class}, version = 2)
