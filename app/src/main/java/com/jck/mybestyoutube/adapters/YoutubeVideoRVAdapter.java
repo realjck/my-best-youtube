@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +25,8 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
     public YoutubeVideoRVAdapter(List<YoutubeVideo> youtubeVideos) {
         this.youtubeVideos = youtubeVideos;
     }
+    private boolean isThumbnailVisible;
+    private boolean isDeleteVisible;
 
     /**
      * On Create View Holder
@@ -73,7 +76,7 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
         });
 
         // Build the thumbnail URL
-        String thumbnailUrl = "https://img.youtube.com/vi/" + currentYoutubeVideo.getYoutube_id() + "/1.jpg";
+        String thumbnailUrl = "https://img.youtube.com/vi/" + currentYoutubeVideo.getYoutube_id() + "/mqdefault.jpg";
 
         // Load the thumbnail using Glide
         Glide.with(holder.itemView.getContext())
@@ -81,6 +84,9 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
                 .fitCenter()
                 .into(holder.ivThumbnail);
 
+        // Visibility of ImageButtons
+        holder.cvThumbnailCard.setVisibility(isThumbnailVisible ? View.VISIBLE : View.GONE);
+        holder.btnDelete.setVisibility(isDeleteVisible ? View.VISIBLE : View.GONE);
     }
 
 
@@ -112,6 +118,17 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
     }
 
 
+    public void setThumbnailVisible(boolean isVisible) {
+        isThumbnailVisible = isVisible;
+        notifyDataSetChanged();
+    }
+
+    public void setDeleteVisible(boolean isVisible) {
+        isDeleteVisible = isVisible;
+        notifyDataSetChanged();
+    }
+
+
 
     /**
      * View Holder constructor
@@ -122,6 +139,7 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
         public ImageButton btnFavorite;
         public ImageButton btnDelete;
         public ImageView ivThumbnail;
+        public CardView cvThumbnailCard;
 
         public YoutubeVideoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -130,6 +148,7 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
             btnFavorite = itemView.findViewById(R.id.btnFavorite);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
+            cvThumbnailCard = itemView.findViewById(R.id.cvThumbnailCard);
         }
     }
 

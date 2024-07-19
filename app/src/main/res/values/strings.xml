@@ -2,6 +2,8 @@
     <string name="app_name">MyBestYouTube</string>
     <string name="add_youtube_video">Add Youtube Video</string>
     <string name="favorite">Favori</string>
+    <string name="favorite_add">ajouté aux favoris.</string>
+    <string name="favorite_remove">supprimé des favoris.</string>
     <string name="placeholder_description">Description</string>
     <string name="placeholder_url">url ou id de la vidéo</string>
     <string name="placeholder_titre">Titre de la vidéo</string>
@@ -9,12 +11,16 @@
     <string name="btn_cancel">Annuler</string>
     <string name="delete_title">Supprimer</string>
     <string name="delete_content">Êtes-vous sûr de vouloir supprimer cette entrée de la liste ?</string>
-    <string name="delete_verb"> supprimé.</string>
+    <string name="delete_verb">supprimé.</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="menu1">Voir les miniatures</string>
+    <string name="menu2">Éditer la liste</string>
     <string-array name="categories">
-        <item>Catégorie 1</item>
-        <item>Catégorie 2</item>
-        <item>Catégorie 3</item>
+        <item>Musique</item>
+        <item>Jeux vidéo</item>
+        <item>Comédie</item>
+        <item>Informatique</item>
+        <item>Culture</item>
     </string-array>
 </resources>
