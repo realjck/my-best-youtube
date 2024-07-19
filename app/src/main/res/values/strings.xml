@@ -7,6 +7,11 @@
     <string name="placeholder_titre">Titre de la vidéo</string>
     <string name="btn_add">Ajouter</string>
     <string name="btn_cancel">Annuler</string>
+    <string name="delete_title">Supprimer</string>
+    <string name="delete_content">Êtes-vous sûr de vouloir supprimer cette entrée de la liste ?</string>
+    <string name="delete_verb"> supprimé.</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
     <string-array name="categories">
         <item>Catégorie 1</item>
         <item>Catégorie 2</item>
