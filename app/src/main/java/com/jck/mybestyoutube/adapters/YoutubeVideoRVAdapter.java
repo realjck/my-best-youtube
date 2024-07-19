@@ -4,11 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.jck.mybestyoutube.R;
 import com.jck.mybestyoutube.models.YoutubeVideo;
 
@@ -47,6 +49,16 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
                 mOnFavoriteButtonClickListener.onFavoriteButtonClick(currentYoutubeVideo);
             }
         });
+
+        // Build the thumbnail URL
+        String thumbnailUrl = "https://img.youtube.com/vi/" + currentYoutubeVideo.getYoutube_id() + "/1.jpg";
+
+        // Load the thumbnail using Glide
+        Glide.with(holder.itemView.getContext())
+                .load(thumbnailUrl)
+                .fitCenter()
+                .into(holder.ivThumbnail);
+
     }
 
 
@@ -67,12 +79,14 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
         public TextView tvTitre;
         public TextView tvDescription;
         public ImageButton btnFavorite;
+        public ImageView ivThumbnail;
 
         public YoutubeVideoViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitre = itemView.findViewById(R.id.tvTitre);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             btnFavorite = itemView.findViewById(R.id.btnFavorite);
+            ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
         }
     }
 
