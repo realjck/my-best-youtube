@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,9 +29,9 @@ public class AddYoutubeActivity extends AppCompatActivity {
     private Button btnAdd;
     private Button btnCancel;
 
-    private EditText etTitre;
+    private EditText etTitle;
     private EditText etDescription;
-    private EditText etUrl;
+    private EditText etYoutubeId;
     private Spinner spinnerCategory;
 
     @Override
@@ -41,9 +43,9 @@ public class AddYoutubeActivity extends AppCompatActivity {
         context = getApplicationContext();
         btnCancel = findViewById(R.id.btnCancel);
         btnAdd = findViewById(R.id.btnAddYoutubeVideo);
-        etTitre = findViewById(R.id.etTitre);
+        etTitle = findViewById(R.id.etTitle);
         etDescription = findViewById(R.id.etDescription);
-        etUrl = findViewById(R.id.etUrl);
+        etYoutubeId = findViewById(R.id.etYoutubeId);
         spinnerCategory = findViewById(R.id.spinnerCategory);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -74,20 +76,32 @@ public class AddYoutubeActivity extends AppCompatActivity {
     }
 
     void addYoutubeVideo(){
-        String titreText = etTitre.getText().toString();
+        String titreText = etTitle.getText().toString();
         String descriptionText = etDescription.getText().toString();
-        String urlText = etUrl.getText().toString();
+        String youtubeIdText = etYoutubeId.getText().toString();
         String categoryText = spinnerCategory.getSelectedItem().toString();
-        if (!titreText.isEmpty() && !descriptionText.isEmpty() && !urlText.isEmpty()) {
-            Toast.makeText(context, "Added " + titreText, Toast.LENGTH_SHORT).show();
-            etTitre.setText("");
+        if (!titreText.isEmpty() && !descriptionText.isEmpty() && !youtubeIdText.isEmpty()) {
+            /*
+            etTitle.setText("");
             etDescription.setText("");
-            etUrl.setText("");
-            YoutubeVideo youtubeVideo = new YoutubeVideo(titreText, descriptionText, urlText, categoryText, false);
-            YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().add(youtubeVideo);
-            // back to Main
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
+            etYoutubeId.setText("");
+             */
+            // Parse Youtube ID
+            String youtubeId = "";
+            String regex = "(?:v=([\\w-]{11,15}))|([\\w-]{11,15})";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(youtubeIdText);
+            if (matcher.find()) {
+                youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
+                YoutubeVideo youtubeVideo = new YoutubeVideo(titreText, descriptionText, youtubeId, categoryText, false);
+                YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().add(youtubeVideo);
+                Toast.makeText(context, "Added " + titreText, Toast.LENGTH_SHORT).show();
+                // back to Main
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(context, "Can't find a Youtube ID", Toast.LENGTH_LONG).show();
+            }
         } else {
             Toast.makeText(context, "Please fill every field", Toast.LENGTH_LONG).show();
         }

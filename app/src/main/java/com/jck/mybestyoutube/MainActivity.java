@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements YoutubeVideoRVAda
 
         youtubeVideos = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().list();
         for (YoutubeVideo yv : youtubeVideos) {
-            Log.d(TAG, yv.getTitle() + " (" + yv.getDescription() + ")");
+            Log.d(TAG, yv.getTitle() + " (" + yv.getYoutube_id() + ")");
         }
         youtubeVideoRVAdapter = new YoutubeVideoRVAdapter(youtubeVideos);
         youtubeVideoRVAdapter.setOnFavoriteButtonClickListener(this);

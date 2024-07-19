@@ -3,7 +3,7 @@
     <string name="add_youtube_video">Add Youtube Video</string>
     <string name="favorite">Favori</string>
     <string name="placeholder_description">Description</string>
-    <string name="placeholder_url">url de la vidéo</string>
+    <string name="placeholder_url">url ou id de la vidéo</string>
     <string name="placeholder_titre">Titre de la vidéo</string>
     <string name="btn_add">Ajouter</string>
     <string name="btn_cancel">Annuler</string>

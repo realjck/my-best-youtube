@@ -25,7 +25,7 @@
 
 
         <EditText
-            android:id="@+id/etTitre"
+            android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints=""
@@ -45,12 +45,12 @@
             android:hint="@string/placeholder_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etTitre"
+            app:layout_constraintTop_toBottomOf="@id/etTitle"
             android:layout_marginTop="25sp"
             />
 
         <EditText
-            android:id="@+id/etUrl"
+            android:id="@+id/etYoutubeId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints=""
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etUrl"
+            app:layout_constraintTop_toBottomOf="@id/etYoutubeId"
             android:layout_marginTop="25sp"
             />
 
