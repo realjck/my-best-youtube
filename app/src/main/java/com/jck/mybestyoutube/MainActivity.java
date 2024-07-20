@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity
         YoutubeVideoRVAdapter.OnFavoriteButtonClickListener,
         YoutubeVideoRVAdapter.OnDeleteButtonClickListener {
 
-    private FloatingActionButton fabAdd;
     private Context context;
     private static final String TAG = "MainActivity";
     private RecyclerView rvYoutubeVideo;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         context = getApplicationContext();
-        fabAdd = findViewById(R.id.fabSwitchAddTodo);
         rvYoutubeVideo = findViewById(R.id.rvYoutubeVideo);
         rvYoutubeVideo.setLayoutManager(new LinearLayoutManager(this));
 
@@ -62,9 +60,6 @@ public class MainActivity extends AppCompatActivity
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // Button d'Action +
-        fabAdd.setOnClickListener(view -> goAddYoutube());
 
         // Récupère les vidéos
         youtubeVideos = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().list();
