@@ -5,7 +5,7 @@
     <string name="favorite_add">ajouté aux favoris.</string>
     <string name="favorite_remove">supprimé des favoris.</string>
     <string name="placeholder_description">Description</string>
-    <string name="placeholder_url">url ou id de la vidéo</string>
+    <string name="placeholder_url">Id ou url de la vidéo</string>
     <string name="placeholder_titre">Titre de la vidéo</string>
     <string name="btn_add">Ajouter</string>
     <string name="btn_cancel">Annuler</string>
@@ -16,6 +16,9 @@
     <string name="no">Non</string>
     <string name="menu1">Voir les miniatures</string>
     <string name="menu2">Éditer la liste</string>
+    <string name="btn_get_video_info">Récupérer les informations</string>
+    <string name="add_consigne_1">Entrez l\'identifiant ou l\'url de la vidéo youtube que vous voulez ajouter, et cliquez sur \"Récupérer les informations\" pour retrouver automatiquement le titre et la description.</string>
+    <string name="add_consigne_2">Sélectionnez une catégorie :</string>
     <string-array name="categories">
         <item>Musique</item>
         <item>Jeux vidéo</item>

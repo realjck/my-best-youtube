@@ -130,9 +130,9 @@ public class MainActivity extends AppCompatActivity
         youtubeVideo.setFavorite(!youtubeVideo.getFavorite());
         YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().update(youtubeVideo);
         if(youtubeVideo.getFavorite()){
-            Toast.makeText(context, youtubeVideo.getTitle() + " " + getString(R.string.favorite_add), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, youtubeVideo.getTitle() + " " + getString(R.string.favorite_add), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, youtubeVideo.getTitle() + " " + getString(R.string.favorite_remove), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, youtubeVideo.getTitle() + " " + getString(R.string.favorite_remove), Toast.LENGTH_SHORT).show();
         }
         // Update favorite button image
         int position = youtubeVideos.indexOf(youtubeVideo);
