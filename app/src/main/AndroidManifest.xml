@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MyBestYouTube"
         tools:targetApi="31">
         <activity
+            android:name=".EditYoutubeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewYoutubeActivity"
             android:exported="false" />
         <activity

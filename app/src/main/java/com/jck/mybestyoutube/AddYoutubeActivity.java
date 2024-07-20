@@ -75,6 +75,7 @@ public class AddYoutubeActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Peuple Spinner
         String[] categories = getResources().getStringArray(R.array.categories);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

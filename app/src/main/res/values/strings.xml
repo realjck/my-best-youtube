@@ -3,14 +3,17 @@
     <string name="add_youtube_video">Ajouter une vidéo</string>
     <string name="favorite">Favori</string>
     <string name="category">Catégorie</string>
+    <string name="edit">Éditer</string>
     <string name="favorite_add">ajouté aux favoris.</string>
     <string name="favorite_remove">retiré des favoris.</string>
     <string name="launch_video">Voir la vidéo</string>
+    <string name="video_updated">Vidéo mise à jour</string>
     <string name="placeholder_description">Description</string>
     <string name="placeholder_url">Id ou url de la vidéo</string>
     <string name="placeholder_titre">Titre de la vidéo</string>
     <string name="btn_add">Ajouter</string>
     <string name="btn_cancel">Annuler</string>
+    <string name="update">Mettre à jour</string>
     <string name="delete_title">Supprimer</string>
     <string name="delete_content">Êtes-vous sûr de vouloir supprimer cette entrée de la liste ?</string>
     <string name="delete_verb">supprimé.</string>
