@@ -105,7 +105,7 @@ public class AddYoutubeActivity extends AppCompatActivity {
                 youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
 
                 Call<VideoResponse> call = youtubeInfoService.getVideoInfo(
-                        "AIzaSyDRH2Me3zxajIkod7BnWKOiuWfulcnQc3Y",
+                        BuildConfig.API_KEY,
                         "snippet",
                         youtubeId
                 );
