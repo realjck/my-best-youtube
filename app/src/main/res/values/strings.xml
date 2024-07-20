@@ -5,6 +5,7 @@
     <string name="category">Catégorie</string>
     <string name="favorite_add">ajouté aux favoris.</string>
     <string name="favorite_remove">retiré des favoris.</string>
+    <string name="launch_video">Voir la vidéo</string>
     <string name="placeholder_description">Description</string>
     <string name="placeholder_url">Id ou url de la vidéo</string>
     <string name="placeholder_titre">Titre de la vidéo</string>

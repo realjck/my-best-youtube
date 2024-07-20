@@ -1,11 +1,15 @@
 package com.jck.mybestyoutube;
 
+import android.content.ActivityNotFoundException;
+import android.net.Uri;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +29,7 @@ public class ViewYoutubeActivity extends AppCompatActivity {
     private TextView tvTitle;
     private TextView tvCategory;
     private TextView tvDescription;
+    private Button btnLaunchVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +47,23 @@ public class ViewYoutubeActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvCategory = findViewById(R.id.tvCategory);
         tvDescription = findViewById(R.id.tvDescription);
+        btnLaunchVideo = findViewById(R.id.btnLaunchVideo);
 
         Long videoId = getIntent().getLongExtra("videoId", -1);
         YoutubeVideo youtubeVideo = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().find(videoId);
         tvTitle.setText(youtubeVideo.getTitle());
         tvCategory.setText(youtubeVideo.getCategory());
         tvDescription.setText(youtubeVideo.getDescription());
+
+        // Launch Youtube video
+        btnLaunchVideo.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + youtubeVideo.getYoutube_id()));
+            try {
+                startActivity(intent);
+            } catch(ActivityNotFoundException e) {
+                Toast.makeText(this, "YouTube app not installed", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Build the thumbnail URL
         String thumbnailUrl = "https://img.youtube.com/vi/" + youtubeVideo.getYoutube_id() + "/mqdefault.jpg";
