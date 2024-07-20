@@ -34,15 +34,15 @@ public class MainActivity extends AppCompatActivity
         YoutubeVideoRVAdapter.OnFavoriteButtonClickListener,
         YoutubeVideoRVAdapter.OnDeleteButtonClickListener {
 
-    public static final String CHECKBOX1_KEY = "thumbnail_visibility";
-    public static final String CHECKBOX2_KEY = "delete_visibility";
-
     private FloatingActionButton fabAdd;
     private Context context;
     private static final String TAG = "MainActivity";
     private RecyclerView rvYoutubeVideo;
     private YoutubeVideoRVAdapter youtubeVideoRVAdapter;
     private List<YoutubeVideo> youtubeVideos;
+    // Préférences de l'application :
+    public static final String CHECKBOX1_KEY = "thumbnail_visibility";
+    public static final String CHECKBOX2_KEY = "delete_visibility";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +70,19 @@ public class MainActivity extends AppCompatActivity
         youtubeVideos = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().list();
         // log
         for (YoutubeVideo yv : youtubeVideos) {
-            Log.d(TAG, yv.getTitle() + " (" + yv.getYoutube_id() + ")");
+            Log.d(TAG, yv.getTitle() + " (" + yv.getId() + ")");
         }
         youtubeVideoRVAdapter = new YoutubeVideoRVAdapter(youtubeVideos);
         youtubeVideoRVAdapter.setOnFavoriteButtonClickListener(this);
         youtubeVideoRVAdapter.setOnDeleteButtonClickListener(this);
+        youtubeVideoRVAdapter.setOnItemClickListener(youtubeVideo -> {
+            Intent intent = new Intent(MainActivity.this, ViewYoutubeActivity.class);
+            intent.putExtra("videoId", youtubeVideo.getId());
+            startActivity(intent);
+        });
         rvYoutubeVideo.setAdapter(youtubeVideoRVAdapter);
 
         // Checkbox de visibilité des ImageButtons Thumbnail et Delete
-
         CheckBox checkBox1 = findViewById(R.id.checkBox1);
         CheckBox checkBox2 = findViewById(R.id.checkBox2);
 
@@ -108,6 +112,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    // Menu item
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -120,11 +125,18 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Changement d'activité
+     */
     private void goAddYoutube() {
         Intent intent = new Intent(context, AddYoutubeActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Clic sur un bouton favori d'un élément
+     * @param youtubeVideo élement de la RecyclerView
+     */
     public void onFavoriteButtonClick(YoutubeVideo youtubeVideo) {
         // Toggle favorite and update database
         youtubeVideo.setFavorite(!youtubeVideo.getFavorite());
@@ -141,8 +153,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Clic sur un bouton Delete d'un élement
+     * @param youtubeVideo élément de la RecyclerView
+     */
     public void onDeleteButtonClick(YoutubeVideo youtubeVideo) {
-
         new AlertDialog.Builder(MainActivity.this)
                 .setTitle(R.string.delete_title)
                 .setMessage(R.string.delete_content)
@@ -159,5 +174,7 @@ public class MainActivity extends AppCompatActivity
                 .show();
 
     }
+
+
 
 }

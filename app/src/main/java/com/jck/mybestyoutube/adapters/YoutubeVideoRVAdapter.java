@@ -22,6 +22,7 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
     private final List<YoutubeVideo> youtubeVideos;
     private OnFavoriteButtonClickListener mOnFavoriteButtonClickListener;
     private OnDeleteButtonClickListener mOnDeleteButtonClickListener;
+    private OnItemClickListener onItemClickListener;
     public YoutubeVideoRVAdapter(List<YoutubeVideo> youtubeVideos) {
         this.youtubeVideos = youtubeVideos;
     }
@@ -72,6 +73,13 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
         holder.btnDelete.setOnClickListener(v -> {
             if (mOnDeleteButtonClickListener != null) {
                 mOnDeleteButtonClickListener.onDeleteButtonClick(currentYoutubeVideo);
+            }
+        });
+
+        // Set Click item
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(currentYoutubeVideo);
             }
         });
 
@@ -126,6 +134,17 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
     public void setDeleteVisible(boolean isVisible) {
         isDeleteVisible = isVisible;
         notifyDataSetChanged();
+    }
+
+    /**
+     * Listener clic sur l'item
+     */
+    public interface OnItemClickListener {
+        void onItemClick(YoutubeVideo youtubeVideo);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
 
