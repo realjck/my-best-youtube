@@ -1,5 +1,8 @@
 package com.jck.mybestyoutube.pojos;
 
+/**
+ * POJO ResourceId de l'API Youtube
+ */
 public class ResourceId {
     private String kind;
     private String videoId;

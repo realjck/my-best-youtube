@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entité en BDD YoutubeVideo
+ */
 @Entity
 public class YoutubeVideo {
 

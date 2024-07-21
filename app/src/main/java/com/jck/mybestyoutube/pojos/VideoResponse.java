@@ -2,6 +2,9 @@ package com.jck.mybestyoutube.pojos;
 
 import java.util.List;
 
+/**
+ * POJO du Response API Youtube (objet principal)
+ */
 public class VideoResponse {
     private List<Item> items;
     private String kind;

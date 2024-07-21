@@ -1,5 +1,8 @@
 package com.jck.mybestyoutube.pojos;
 
+/**
+ * POJO Snippet de l'API Youtube
+ */
 public class Snippet {
 
         private String publishedAt;

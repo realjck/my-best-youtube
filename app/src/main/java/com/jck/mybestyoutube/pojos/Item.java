@@ -1,5 +1,8 @@
 package com.jck.mybestyoutube.pojos;
 
+/**
+ * POJO Item de l'API Youtube
+ */
 public class Item {
 
     private String kind;
