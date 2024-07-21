@@ -28,7 +28,7 @@
     <string name="btn_get_video_info">Récupérer les informations</string>
     <string name="add_consigne_1">Entrez l\'identifiant ou l\'url de la vidéo YouTube que vous voulez ajouter, et cliquez sur "Récupérer les informations" pour retrouver automatiquement le titre et la description.</string>
     <string name="add_consigne_2">Sélectionnez une catégorie :</string>
-    <string name="add_consigne_playlist">Entrez l\'identifiant ou l\'url de la playlist Youtube que vous souhaitez importer et cliquez sur "Ajouter la playlist"</string>
+    <string name="add_consigne_playlist">Entrez l\'identifiant ou l\'url de la playlist Youtube que vous souhaitez importer et cliquez sur "Ajouter la playlist" (max 50 résultats)</string>
     <string name="hint_add_playlist">Id ou url de la playlist</string>
     <string name="btn_add_playlist">Ajouter la playlist</string>
     <string name="cant_launch">L\'application Youtube n\'est pas installée</string>

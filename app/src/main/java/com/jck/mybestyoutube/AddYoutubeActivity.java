@@ -23,6 +23,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.jck.mybestyoutube.controllers.YoutubeController;
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
 import com.jck.mybestyoutube.pojos.Snippet;
 import com.jck.mybestyoutube.pojos.Response;
@@ -46,7 +47,7 @@ public class AddYoutubeActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     private LinearLayout llFormSend;
     private LinearLayout llFormSearch;
-    private YoutubeInfoService youtubeInfoService;
+    private YoutubeController youtubeController;
     // Regex pour récupérer l'identifiant Youtube d'une URL ou ID seul
     private final String regexYoutube = "(?:v=([\\w-]{11,15}))|([\\w-]{11,15})";
 
@@ -69,13 +70,8 @@ public class AddYoutubeActivity extends AppCompatActivity {
         // Cache deuxième partie du formulaire
         llFormSend.setVisibility(View.GONE);
 
-        // Initialize Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.googleapis.com/youtube/v3/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-        youtubeInfoService = retrofit.create(YoutubeInfoService.class);
+        // Initialize controller
+        youtubeController = new YoutubeController();
 
         btnGetVideoInfo.setOnClickListener(view -> getVideoInfo());
 
@@ -117,13 +113,7 @@ public class AddYoutubeActivity extends AppCompatActivity {
             if (matcher.find()) {
                 youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
 
-                Call<Response> call = youtubeInfoService.getVideoInfo(
-                        BuildConfig.API_KEY,
-                        "snippet",
-                        youtubeId
-                );
-
-                call.enqueue(new Callback<Response>() {
+                youtubeController.getVideoInfo(BuildConfig.API_KEY, "snippet", youtubeId, new Callback<Response>() {
                     @Override
                     public void onResponse(@NonNull Call<Response> call, @NonNull retrofit2.Response<Response> response) {
                         if (response.isSuccessful()) {
@@ -144,7 +134,6 @@ public class AddYoutubeActivity extends AppCompatActivity {
                             Toast.makeText(context, "Error: " + response.message(), Toast.LENGTH_LONG).show();
                         }
                     }
-
                     @Override
                     public void onFailure(@NonNull Call<Response> call, @NonNull Throwable t) {
                         Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();

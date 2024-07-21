@@ -18,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.jck.mybestyoutube.controllers.YoutubeController;
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
 import com.jck.mybestyoutube.pojos.Item;
 import com.jck.mybestyoutube.pojos.Snippet;
@@ -41,7 +42,7 @@ public class AddPlaylistActivity extends AppCompatActivity {
     private EditText etPlaylist;
     private Button btnAddPlaylist;
     private Spinner spinnerCategory;
-    private YoutubeInfoService youtubeInfoService;
+    private YoutubeController youtubeController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +59,8 @@ public class AddPlaylistActivity extends AppCompatActivity {
         btnAddPlaylist = findViewById(R.id.btnAddPlaylist);
         spinnerCategory = findViewById(R.id.spinnerCategory);
 
-        // Initialize Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.googleapis.com/youtube/v3/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        youtubeInfoService = retrofit.create(YoutubeInfoService.class);
+        // Initialize controller
+        youtubeController = new YoutubeController();
 
         // Peuple Spinner
         String[] categories = getResources().getStringArray(R.array.categories);
@@ -85,26 +81,22 @@ public class AddPlaylistActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Ajoute les vidéos de la playlist
+     */
     void addPlaylist(){
         String playlistIdText = etPlaylist.getText().toString();
         if (!playlistIdText.isEmpty()) {
             // Parse Playlist ID
-            String youtubeId = "";
+            String playlistId = "";
             String regexPlaylist = "(?:list=([\\w-]{11,50}))|([\\w-]{11,50})";
             Pattern pattern = Pattern.compile(regexPlaylist);
             Matcher matcher = pattern.matcher(playlistIdText);
             if (matcher.find()) {
-                youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
+                playlistId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
 
-                Call<Response> call = youtubeInfoService.getPlaylistItemsInfo(
-                        BuildConfig.API_KEY,
-                        "snippet",
-                        youtubeId,
-                        "50"
-                );
+                youtubeController.getPlaylistItemsInfo(BuildConfig.API_KEY, "snippet", playlistId, "50", new Callback<Response>() {
 
-                call.enqueue(new Callback<Response>() {
                     @Override
                     public void onResponse(@NonNull Call<Response> call, @NonNull retrofit2.Response<Response> response) {
                         if (response.isSuccessful()) {
@@ -141,6 +133,7 @@ public class AddPlaylistActivity extends AppCompatActivity {
                         Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+
             } else {
                 Toast.makeText(context, R.string.no_youtube_id_found, Toast.LENGTH_LONG).show();
             }
