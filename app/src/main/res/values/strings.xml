@@ -2,6 +2,9 @@
     <string name="app_name">MyBestYouTube</string>
     <string name="add_youtube_video">Ajouter une vidéo</string>
     <string name="add_playlist">Ajouter une playlist</string>
+    <string name="empty_list">Vider la liste</string>
+    <string name="empty_list_confirmation">Êtes-vous sûr(e) de vouloir vider la liste ? (cette action est irréversible)</string>
+    <string name="empty_list_success">Liste vidée</string>
     <string name="favorite">Favori</string>
     <string name="category">Catégorie</string>
     <string name="edit">Éditer</string>
@@ -16,7 +19,7 @@
     <string name="btn_cancel">Annuler</string>
     <string name="update">Mettre à jour</string>
     <string name="delete_title">Supprimer</string>
-    <string name="delete_content">Êtes-vous sûr de vouloir supprimer cette entrée de la liste ?</string>
+    <string name="delete_content">Êtes-vous sûr(e) de vouloir supprimer cette entrée de la liste ?</string>
     <string name="delete_verb">supprimé.</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>

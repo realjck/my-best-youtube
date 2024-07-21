@@ -126,14 +126,34 @@ public class MainActivity extends AppCompatActivity
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem menuItemAddYoutube = menu.findItem(R.id.action_add_youtube);
         MenuItem menuItemAddPlaylist = menu.findItem(R.id.action_add_playlist);
+        MenuItem menuItemEmptyList = menu.findItem(R.id.action_empty_list);
         menuItemAddYoutube.setOnMenuItemClickListener(item -> {
+            // Ajoute Vidéo
             Intent intent = new Intent(context, AddYoutubeActivity.class);
             startActivity(intent);
             return true;
         });
         menuItemAddPlaylist.setOnMenuItemClickListener(item -> {
+            // Ajoute Playlist
             Intent intent = new Intent(context, AddPlaylistActivity.class);
             startActivity(intent);
+            return true;
+        });
+        menuItemEmptyList.setOnMenuItemClickListener(item -> {
+            // Vide la liste
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.delete_title)
+                    .setMessage(R.string.empty_list_confirmation)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        List<YoutubeVideo> youtubeVideos = YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().list();
+                        for (YoutubeVideo youtubeVideo : youtubeVideos) {
+                            YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().delete(youtubeVideo);
+                        }
+                        Toast.makeText(context, getString(R.string.empty_list_success), Toast.LENGTH_LONG).show();
+                        recreate();
+                    })
+                    .setNegativeButton(R.string.no, null)
+                    .show();
             return true;
         });
         return true;
@@ -174,7 +194,7 @@ public class MainActivity extends AppCompatActivity
                         youtubeVideos.remove(position);
                         youtubeVideoRVAdapter.notifyItemRemoved(position);
                     }
-                    Toast.makeText(context, youtubeVideo.getTitle() + " " + getString(R.string.delete_verb), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, getString(R.string.empty_list_success), Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();

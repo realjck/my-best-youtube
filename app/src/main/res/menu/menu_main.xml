@@ -11,4 +11,9 @@
         android:title="@string/add_playlist"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_empty_list"
+        android:title="@string/empty_list"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>
