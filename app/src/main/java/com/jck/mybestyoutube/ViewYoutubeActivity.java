@@ -93,7 +93,6 @@ public class ViewYoutubeActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_view_youtube, menu);
         MenuItem menuItemEdit = menu.findItem(R.id.action_edit);
-        MenuItem menuItemDelete = menu.findItem(R.id.action_delete);
         // Go activity Edit
         menuItemEdit.setOnMenuItemClickListener(item -> {
             Intent intent = new Intent(context, EditYoutubeActivity.class);
@@ -101,15 +100,6 @@ public class ViewYoutubeActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         });
-
-        menuItemDelete.setOnMenuItemClickListener(item -> {
-            YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().delete(youtubeVideo);
-            Toast.makeText(context, youtubeVideo.getTitle() + " " + getString(R.string.delete_verb), Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
-            return true;
-        });
-
         return true;
     }
 

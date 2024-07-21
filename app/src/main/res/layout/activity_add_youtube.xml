@@ -29,90 +29,109 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvAddConsigne1"
+            <LinearLayout
+                android:id="@+id/llFormSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_consigne_1" />
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/etYoutubeId"
+                    <TextView
+                        android:id="@+id/tvAddConsigne1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_consigne_1" />
+
+                    <EditText
+                        android:id="@+id/etYoutubeId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints=""
+                        android:inputType="textUri"
+                        android:hint="@string/placeholder_url"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvAddConsigne1"
+                        android:layout_marginTop="25sp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnGetVideoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
+                        android:layout_marginTop="25sp"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        android:text="@string/btn_get_video_info" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llFormSend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:inputType="textUri"
-                android:hint="@string/placeholder_url"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAddConsigne1"
-                android:layout_marginTop="25sp"
-                />
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnGetVideoInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
-                android:layout_marginTop="25sp"
-                app:layout_constraintHorizontal_bias="0.5"
-                android:text="@string/btn_get_video_info" />
+                <EditText
+                    android:id="@+id/etTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:inputType="text"
+                    android:hint="@string/placeholder_titre"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="25sp"
+                    app:layout_constraintTop_toBottomOf="@id/btnGetVideoInfo" />
 
-            <EditText
-                android:id="@+id/etTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:inputType="text"
-                android:hint="@string/placeholder_titre"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="25sp"
-                app:layout_constraintTop_toBottomOf="@id/btnGetVideoInfo" />
+                <EditText
+                    android:id="@+id/etDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:inputType="textMultiLine"
+                    android:height="100dp"
+                    android:hint="@string/placeholder_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etTitle"
+                    android:layout_marginTop="25sp"
+                    />
 
-            <EditText
-                android:id="@+id/etDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:inputType="textMultiLine"
-                android:height="100dp"
-                android:hint="@string/placeholder_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etTitle"
-                android:layout_marginTop="25sp"
-                />
-
-            <TextView
-                android:id="@+id/tvAddConsigne2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25sp"
-                android:text="@string/add_consigne_2" />
+                <TextView
+                    android:id="@+id/tvAddConsigne2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25sp"
+                    android:text="@string/add_consigne_2" />
 
 
-            <Spinner
-                android:id="@+id/spinnerCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etDescription"
-                android:layout_marginTop="25sp"
-                />
+                <Spinner
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etDescription"
+                    android:layout_marginTop="25sp"
+                    />
 
-            <Button
-                android:id="@+id/btnAddYoutubeVideo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
-                android:layout_marginTop="25sp"
-                app:layout_constraintHorizontal_bias="0.5"
-                android:text="@string/btn_add" />
+                <Button
+                    android:id="@+id/btnAddYoutubeVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
+                    android:layout_marginTop="25sp"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    android:text="@string/btn_add" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

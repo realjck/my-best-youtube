@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.regex.Pattern;
@@ -43,6 +45,8 @@ public class AddYoutubeActivity extends AppCompatActivity {
     private EditText etDescription;
     private EditText etYoutubeId;
     private Spinner spinnerCategory;
+    private LinearLayout llFormSend;
+    private LinearLayout llFormSearch;
     private YoutubeInfoService youtubeInfoService;
     // Regex pour récupérer l'identifiant Youtube d'une URL ou ID seul
     private final String regexYoutube = "(?:v=([\\w-]{11,15}))|([\\w-]{11,15})";
@@ -60,6 +64,11 @@ public class AddYoutubeActivity extends AppCompatActivity {
         etDescription = findViewById(R.id.etDescription);
         etYoutubeId = findViewById(R.id.etYoutubeId);
         spinnerCategory = findViewById(R.id.spinnerCategory);
+        llFormSend = findViewById(R.id.llFormSend);
+        llFormSearch = findViewById(R.id.llFormSearch);
+
+        // Cache deuxième partie du formulaire
+        llFormSend.setVisibility(View.GONE);
 
         // Initialize Retrofit
         Retrofit retrofit = new Retrofit.Builder()
@@ -123,8 +132,12 @@ public class AddYoutubeActivity extends AppCompatActivity {
                             if (videoResponse != null && !videoResponse.getItems().isEmpty()) {
                                 Snippet snippet = videoResponse.getItems().get(0).getSnippet();
                                 Log.d(TAG, snippet.toString());
+                                // Set text informations
                                 etTitle.setText(snippet.getTitle());
                                 etDescription.setText(snippet.getDescription());
+                                // Set visibility formulaire
+                                llFormSearch.setVisibility(View.GONE);
+                                llFormSend.setVisibility(View.VISIBLE);
                             } else {
                                 Toast.makeText(context, R.string.no_video_found, Toast.LENGTH_LONG).show();
                             }
