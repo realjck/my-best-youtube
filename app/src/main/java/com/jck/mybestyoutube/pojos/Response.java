@@ -5,18 +5,18 @@ import java.util.List;
 /**
  * POJO du Response API Youtube (objet principal)
  */
-public class VideoResponse {
+public class Response {
     private List<Item> items;
     private String kind;
     private String etag;
 
-    public VideoResponse(List<Item> items, String kind, String etag) {
+    public Response(List<Item> items, String kind, String etag) {
         this.items = items;
         this.kind = kind;
         this.etag = etag;
     }
 
-    public VideoResponse() {
+    public Response() {
     }
 
     public List<Item> getItems() {

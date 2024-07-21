@@ -25,13 +25,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
 import com.jck.mybestyoutube.pojos.Snippet;
-import com.jck.mybestyoutube.pojos.VideoResponse;
+import com.jck.mybestyoutube.pojos.Response;
 import com.jck.mybestyoutube.pojos.YoutubeVideo;
 import com.jck.mybestyoutube.services.YoutubeInfoService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -118,17 +117,17 @@ public class AddYoutubeActivity extends AppCompatActivity {
             if (matcher.find()) {
                 youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
 
-                Call<VideoResponse> call = youtubeInfoService.getVideoInfo(
+                Call<Response> call = youtubeInfoService.getVideoInfo(
                         BuildConfig.API_KEY,
                         "snippet",
                         youtubeId
                 );
 
-                call.enqueue(new Callback<VideoResponse>() {
+                call.enqueue(new Callback<Response>() {
                     @Override
-                    public void onResponse(@NonNull Call<VideoResponse> call, @NonNull Response<VideoResponse> response) {
+                    public void onResponse(@NonNull Call<Response> call, @NonNull retrofit2.Response<Response> response) {
                         if (response.isSuccessful()) {
-                            VideoResponse videoResponse = response.body();
+                            Response videoResponse = response.body();
                             if (videoResponse != null && !videoResponse.getItems().isEmpty()) {
                                 Snippet snippet = videoResponse.getItems().get(0).getSnippet();
                                 Log.d(TAG, snippet.toString());
@@ -147,7 +146,7 @@ public class AddYoutubeActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<VideoResponse> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<Response> call, @NonNull Throwable t) {
                         Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });

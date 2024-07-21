@@ -3,9 +3,7 @@ package com.jck.mybestyoutube;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
 import com.jck.mybestyoutube.pojos.Item;
 import com.jck.mybestyoutube.pojos.Snippet;
-import com.jck.mybestyoutube.pojos.VideoResponse;
+import com.jck.mybestyoutube.pojos.Response;
 import com.jck.mybestyoutube.pojos.YoutubeVideo;
 import com.jck.mybestyoutube.services.YoutubeInfoService;
 
@@ -33,7 +31,6 @@ import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -100,18 +97,18 @@ public class AddPlaylistActivity extends AppCompatActivity {
             if (matcher.find()) {
                 youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
 
-                Call<VideoResponse> call = youtubeInfoService.getPlaylistItemsInfo(
+                Call<Response> call = youtubeInfoService.getPlaylistItemsInfo(
                         BuildConfig.API_KEY,
                         "snippet",
                         youtubeId,
                         "50"
                 );
 
-                call.enqueue(new Callback<VideoResponse>() {
+                call.enqueue(new Callback<Response>() {
                     @Override
-                    public void onResponse(@NonNull Call<VideoResponse> call, @NonNull Response<VideoResponse> response) {
+                    public void onResponse(@NonNull Call<Response> call, @NonNull retrofit2.Response<Response> response) {
                         if (response.isSuccessful()) {
-                            VideoResponse videoResponse = response.body();
+                            Response videoResponse = response.body();
                             if (videoResponse != null && !videoResponse.getItems().isEmpty()) {
                                 List<Item> items = videoResponse.getItems();
                                 for (Item item : items) {
@@ -140,7 +137,7 @@ public class AddPlaylistActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<VideoResponse> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<Response> call, @NonNull Throwable t) {
                         Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
