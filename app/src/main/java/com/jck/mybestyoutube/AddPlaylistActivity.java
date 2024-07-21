@@ -9,11 +9,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -24,10 +21,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.jck.mybestyoutube.database.YoutubeVideoDatabase;
+import com.jck.mybestyoutube.pojos.Item;
 import com.jck.mybestyoutube.pojos.Snippet;
 import com.jck.mybestyoutube.pojos.VideoResponse;
 import com.jck.mybestyoutube.pojos.YoutubeVideo;
 import com.jck.mybestyoutube.services.YoutubeInfoService;
+
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,56 +37,37 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AddYoutubeActivity extends AppCompatActivity {
+public class AddPlaylistActivity extends AppCompatActivity {
 
     private Context context;
-    private static final String TAG = "AddYoutubeActivity";
-    private Button btnAdd;
-    private Button btnGetVideoInfo;
-    private EditText etTitle;
-    private EditText etDescription;
-    private EditText etYoutubeId;
+    private static final String TAG = "AddPlaylistActivity";
+    private EditText etPlaylist;
+    private Button btnAddPlaylist;
     private Spinner spinnerCategory;
-    private LinearLayout llFormSend;
-    private LinearLayout llFormSearch;
     private YoutubeInfoService youtubeInfoService;
-    // Regex pour récupérer l'identifiant Youtube d'une URL ou ID seul
-    private final String regexYoutube = "(?:v=([\\w-]{11,15}))|([\\w-]{11,15})";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_add_youtube);
-
-        context = getApplicationContext();
-        btnAdd = findViewById(R.id.btnAddYoutubeVideo);
-        btnGetVideoInfo = findViewById(R.id.btnGetVideoInfo);
-        etTitle = findViewById(R.id.etTitle);
-        etDescription = findViewById(R.id.etDescription);
-        etYoutubeId = findViewById(R.id.etYoutubeId);
-        spinnerCategory = findViewById(R.id.spinnerCategory);
-        llFormSend = findViewById(R.id.llFormSend);
-        llFormSearch = findViewById(R.id.llFormSearch);
-
-        // Cache deuxième partie du formulaire
-        llFormSend.setVisibility(View.GONE);
-
-        // Initialize Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.googleapis.com/youtube/v3/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-        youtubeInfoService = retrofit.create(YoutubeInfoService.class);
-
-        btnGetVideoInfo.setOnClickListener(view -> getVideoInfo());
-
+        setContentView(R.layout.activity_add_playlist);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        context = getApplicationContext();
+        etPlaylist = findViewById(R.id.etPlaylist);
+        btnAddPlaylist = findViewById(R.id.btnAddPlaylist);
+        spinnerCategory = findViewById(R.id.spinnerCategory);
+
+        // Initialize Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://www.googleapis.com/youtube/v3/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        youtubeInfoService = retrofit.create(YoutubeInfoService.class);
 
         // Peuple Spinner
         String[] categories = getResources().getStringArray(R.array.categories);
@@ -101,27 +84,27 @@ public class AddYoutubeActivity extends AppCompatActivity {
         }
 
         // Listener clic bouton Ajouter
-        btnAdd.setOnClickListener(view -> addYoutubeVideo());
+        btnAddPlaylist.setOnClickListener(view -> addPlaylist());
 
     }
 
-    /**
-     * Récupère les infos Titre et Description grâce à l'API Google Youtube
-     */
-    void getVideoInfo(){
-        String youtubeIdText = etYoutubeId.getText().toString();
-        if (!youtubeIdText.isEmpty()) {
-            // Parse Youtube ID
+
+    void addPlaylist(){
+        String playlistIdText = etPlaylist.getText().toString();
+        if (!playlistIdText.isEmpty()) {
+            // Parse Playlist ID
             String youtubeId = "";
-            Pattern pattern = Pattern.compile(regexYoutube);
-            Matcher matcher = pattern.matcher(youtubeIdText);
+            String regexPlaylist = "(?:list=([\\w-]{11,50}))|([\\w-]{11,50})";
+            Pattern pattern = Pattern.compile(regexPlaylist);
+            Matcher matcher = pattern.matcher(playlistIdText);
             if (matcher.find()) {
                 youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
 
-                Call<VideoResponse> call = youtubeInfoService.getVideoInfo(
+                Call<VideoResponse> call = youtubeInfoService.getPlaylistItemsInfo(
                         BuildConfig.API_KEY,
                         "snippet",
-                        youtubeId
+                        youtubeId,
+                        "50"
                 );
 
                 call.enqueue(new Callback<VideoResponse>() {
@@ -130,14 +113,24 @@ public class AddYoutubeActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             VideoResponse videoResponse = response.body();
                             if (videoResponse != null && !videoResponse.getItems().isEmpty()) {
-                                Snippet snippet = videoResponse.getItems().get(0).getSnippet();
-                                Log.d(TAG, snippet.toString());
-                                // Set text informations
-                                etTitle.setText(snippet.getTitle());
-                                etDescription.setText(snippet.getDescription());
-                                // Set visibility formulaire
-                                llFormSearch.setVisibility(View.GONE);
-                                llFormSend.setVisibility(View.VISIBLE);
+                                List<Item> items = videoResponse.getItems();
+                                for (Item item : items) {
+                                    Snippet snippet = item.getSnippet();
+                                    // créé instances
+                                    YoutubeVideo youtubeVideo = new YoutubeVideo(
+                                            snippet.getTitle(),
+                                            snippet.getDescription(),
+                                            snippet.getResourceId().getVideoId(),
+                                            spinnerCategory.getSelectedItem().toString(),
+                                            false
+                                    );
+                                    YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().add(youtubeVideo);
+                                }
+                                // back to Main
+                                Intent intent = new Intent(context, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+
                             } else {
                                 Toast.makeText(context, R.string.no_video_found, Toast.LENGTH_LONG).show();
                             }
@@ -156,36 +149,6 @@ public class AddYoutubeActivity extends AppCompatActivity {
             }
         } else {
             Toast.makeText(context, R.string.no_youtube_id_found, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    /**
-     * Ajoute la vidéo à la base de données
-     */
-    void addYoutubeVideo(){
-        String titreText = etTitle.getText().toString();
-        String descriptionText = etDescription.getText().toString();
-        String youtubeIdText = etYoutubeId.getText().toString();
-        String categoryText = spinnerCategory.getSelectedItem().toString();
-        if (!titreText.isEmpty() && !descriptionText.isEmpty() && !youtubeIdText.isEmpty()) {
-            // Parse Youtube ID
-            String youtubeId = "";
-            Pattern pattern = Pattern.compile(regexYoutube);
-            Matcher matcher = pattern.matcher(youtubeIdText);
-            if (matcher.find()) {
-                youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
-                YoutubeVideo youtubeVideo = new YoutubeVideo(titreText, descriptionText, youtubeId, categoryText, false);
-                YoutubeVideoDatabase.getDb(context).youtubeVideoDAO().add(youtubeVideo);
-                Toast.makeText(context, "Added " + titreText, Toast.LENGTH_SHORT).show();
-                // back to Main
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(context, R.string.no_youtube_id_found, Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(context, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
         }
     }
 

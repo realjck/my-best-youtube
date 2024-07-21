@@ -114,25 +114,29 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    // Menu item
+    /**
+     * Menu items, redirection vers activités
+     * @param menu The options menu in which you place your items.
+     *
+     * @return boolean
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_settings);
-        menuItem.setOnMenuItemClickListener(item -> {
-            goAddYoutube();
+        MenuItem menuItemAddYoutube = menu.findItem(R.id.action_add_youtube);
+        MenuItem menuItemAddPlaylist = menu.findItem(R.id.action_add_playlist);
+        menuItemAddYoutube.setOnMenuItemClickListener(item -> {
+            Intent intent = new Intent(context, AddYoutubeActivity.class);
+            startActivity(intent);
+            return true;
+        });
+        menuItemAddPlaylist.setOnMenuItemClickListener(item -> {
+            Intent intent = new Intent(context, AddPlaylistActivity.class);
+            startActivity(intent);
             return true;
         });
         return true;
-    }
-
-    /**
-     * Changement d'activité
-     */
-    private void goAddYoutube() {
-        Intent intent = new Intent(context, AddYoutubeActivity.class);
-        startActivity(intent);
     }
 
     /**

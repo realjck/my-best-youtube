@@ -9,8 +9,9 @@ public class Snippet {
         private String channelTitle;
         private String categoryId;
         private String liveBroadcastContent;
+        private ResourceId resourceId;
 
-    public Snippet(String publishedAt, String channelId, String title, String description, String channelTitle, String categoryId, String liveBroadcastContent) {
+    public Snippet(String publishedAt, String channelId, String title, String description, String channelTitle, String categoryId, String liveBroadcastContent, ResourceId resourceId) {
         this.publishedAt = publishedAt;
         this.channelId = channelId;
         this.title = title;
@@ -18,6 +19,7 @@ public class Snippet {
         this.channelTitle = channelTitle;
         this.categoryId = categoryId;
         this.liveBroadcastContent = liveBroadcastContent;
+        this.resourceId = resourceId;
     }
     public Snippet(){
     }
@@ -78,6 +80,14 @@ public class Snippet {
         this.liveBroadcastContent = liveBroadcastContent;
     }
 
+    public ResourceId getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(ResourceId resourceId) {
+        this.resourceId = resourceId;
+    }
+
     @Override
     public String toString() {
         return "Snippet{" +
@@ -88,6 +98,7 @@ public class Snippet {
                 ", channelTitle='" + channelTitle + '\'' +
                 ", categoryId='" + categoryId + '\'' +
                 ", liveBroadcastContent='" + liveBroadcastContent + '\'' +
+                ", resourceId=" + resourceId +
                 '}';
     }
 }

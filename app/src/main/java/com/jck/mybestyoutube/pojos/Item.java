@@ -48,4 +48,14 @@ public class Item {
     public void setSnippet(Snippet snippet) {
         this.snippet = snippet;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "kind='" + kind + '\'' +
+                ", etag='" + etag + '\'' +
+                ", id='" + id + '\'' +
+                ", snippet=" + snippet +
+                '}';
+    }
 }
