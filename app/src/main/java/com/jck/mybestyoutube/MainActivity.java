@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity
                         youtubeVideos.remove(position);
                         youtubeVideoRVAdapter.notifyItemRemoved(position);
                     }
-                    Toast.makeText(context, getString(R.string.empty_list_success), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, youtubeVideo.getTitle() + " " + getString(R.string.delete_verb), Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
