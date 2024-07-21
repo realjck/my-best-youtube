@@ -55,6 +55,7 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
         YoutubeVideo currentYoutubeVideo = youtubeVideos.get(position);
         holder.tvTitre.setText(currentYoutubeVideo.getTitle());
         holder.tvDescription.setText(currentYoutubeVideo.getDescription());
+        holder.tvCategory.setText(currentYoutubeVideo.getCategory());
 
         // Set favorite button image
         if (currentYoutubeVideo.getFavorite()) {
@@ -155,6 +156,7 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
     public static class YoutubeVideoViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitre;
         public TextView tvDescription;
+        public TextView tvCategory;
         public ImageButton btnFavorite;
         public ImageButton btnDelete;
         public ImageView ivThumbnail;
@@ -164,6 +166,7 @@ public class YoutubeVideoRVAdapter extends RecyclerView.Adapter<YoutubeVideoRVAd
             super(itemView);
             tvTitre = itemView.findViewById(R.id.tvTitre);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            tvCategory = itemView.findViewById(R.id.tvCategory);
             btnFavorite = itemView.findViewById(R.id.btnFavorite);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
