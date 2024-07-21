@@ -44,6 +44,8 @@ public class AddYoutubeActivity extends AppCompatActivity {
     private EditText etYoutubeId;
     private Spinner spinnerCategory;
     private YoutubeInfoService youtubeInfoService;
+    // Regex pour récupérer l'identifiant Youtube d'une URL ou ID seul
+    private final String regexYoutube = "(?:v=([\\w-]{11,15}))|([\\w-]{11,15})";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,18 +91,20 @@ public class AddYoutubeActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        // ajout avec btnAdd
+        // Listener clic bouton Ajouter
         btnAdd.setOnClickListener(view -> addYoutubeVideo());
 
     }
 
+    /**
+     * Récupère les infos Titre et Description grâce à l'API Google Youtube
+     */
     void getVideoInfo(){
         String youtubeIdText = etYoutubeId.getText().toString();
         if (!youtubeIdText.isEmpty()) {
             // Parse Youtube ID
             String youtubeId = "";
-            String regex = "(?:v=([\\w-]{11,15}))|([\\w-]{11,15})";
-            Pattern pattern = Pattern.compile(regex);
+            Pattern pattern = Pattern.compile(regexYoutube);
             Matcher matcher = pattern.matcher(youtubeIdText);
             if (matcher.find()) {
                 youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
@@ -122,7 +126,7 @@ public class AddYoutubeActivity extends AppCompatActivity {
                                 etTitle.setText(snippet.getTitle());
                                 etDescription.setText(snippet.getDescription());
                             } else {
-                                Toast.makeText(context, "No video found", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, R.string.no_video_found, Toast.LENGTH_LONG).show();
                             }
                         } else {
                             Toast.makeText(context, "Error: " + response.message(), Toast.LENGTH_LONG).show();
@@ -135,13 +139,16 @@ public class AddYoutubeActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                Toast.makeText(context, "Can't find a Youtube ID", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.no_youtube_id_found, Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(context, "Please fill Youtube ID field", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.no_youtube_id_found, Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     * Ajoute la vidéo à la base de données
+     */
     void addYoutubeVideo(){
         String titreText = etTitle.getText().toString();
         String descriptionText = etDescription.getText().toString();
@@ -150,8 +157,7 @@ public class AddYoutubeActivity extends AppCompatActivity {
         if (!titreText.isEmpty() && !descriptionText.isEmpty() && !youtubeIdText.isEmpty()) {
             // Parse Youtube ID
             String youtubeId = "";
-            String regex = "(?:v=([\\w-]{11,15}))|([\\w-]{11,15})";
-            Pattern pattern = Pattern.compile(regex);
+            Pattern pattern = Pattern.compile(regexYoutube);
             Matcher matcher = pattern.matcher(youtubeIdText);
             if (matcher.find()) {
                 youtubeId = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
@@ -162,23 +168,22 @@ public class AddYoutubeActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
             } else {
-                Toast.makeText(context, "Can't find a Youtube ID", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.no_youtube_id_found, Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(context, "Please fill every field", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
         }
     }
 
+    // Retour flèche toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                goMainActivity();
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            goMainActivity();
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void goMainActivity() {

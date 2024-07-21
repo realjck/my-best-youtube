@@ -40,8 +40,10 @@ public class MainActivity extends AppCompatActivity
     private YoutubeVideoRVAdapter youtubeVideoRVAdapter;
     private List<YoutubeVideo> youtubeVideos;
     // Préférences de l'application :
-    public static final String CHECKBOX1_KEY = "thumbnail_visibility";
-    public static final String CHECKBOX2_KEY = "delete_visibility";
+    private CheckBox checkboxFavorite;
+    private CheckBox checkBoxEdit;
+    public static final String CHECKBOX_FAVORITE_KEY = "thumbnail_visibility";
+    public static final String CHECKBOX_EDIT_KEY = "edit_visibility";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity
         context = getApplicationContext();
         rvYoutubeVideo = findViewById(R.id.rvYoutubeVideo);
         rvYoutubeVideo.setLayoutManager(new LinearLayoutManager(this));
+        checkboxFavorite = findViewById(R.id.checkBoxFavorite);
+        checkBoxEdit = findViewById(R.id.checkBoxEdit);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -70,40 +74,43 @@ public class MainActivity extends AppCompatActivity
         youtubeVideoRVAdapter = new YoutubeVideoRVAdapter(youtubeVideos);
         youtubeVideoRVAdapter.setOnFavoriteButtonClickListener(this);
         youtubeVideoRVAdapter.setOnDeleteButtonClickListener(this);
+        // Clic sur un item (View/Edit)
         youtubeVideoRVAdapter.setOnItemClickListener(youtubeVideo -> {
-            Intent intent = new Intent(MainActivity.this, ViewYoutubeActivity.class);
+            Intent intent;
+            if (checkBoxEdit.isChecked()){
+                intent = new Intent(MainActivity.this, EditYoutubeActivity.class);
+            } else {
+                intent = new Intent(MainActivity.this, ViewYoutubeActivity.class);
+            }
             intent.putExtra("videoId", youtubeVideo.getId());
             startActivity(intent);
         });
         rvYoutubeVideo.setAdapter(youtubeVideoRVAdapter);
 
         // Checkbox de visibilité des ImageButtons Thumbnail et Delete
-        CheckBox checkBox1 = findViewById(R.id.checkBox1);
-        CheckBox checkBox2 = findViewById(R.id.checkBox2);
-
-        checkBox1.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        checkboxFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             youtubeVideoRVAdapter.setThumbnailVisible(isChecked);
             // Save the checkbox state
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(CHECKBOX1_KEY, isChecked);
+            editor.putBoolean(CHECKBOX_FAVORITE_KEY, isChecked);
             editor.apply();
         });
 
-        checkBox2.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        checkBoxEdit.setOnCheckedChangeListener((buttonView, isChecked) -> {
             youtubeVideoRVAdapter.setDeleteVisible(isChecked);
             // Save the checkbox state
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(CHECKBOX2_KEY, isChecked);
+            editor.putBoolean(CHECKBOX_EDIT_KEY, isChecked);
             editor.apply();
         });
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean checkBox1Checked = sharedPreferences.getBoolean(CHECKBOX1_KEY, true);
-        boolean checkBox2Checked = sharedPreferences.getBoolean(CHECKBOX2_KEY, true);
-        checkBox1.setChecked(checkBox1Checked);
-        checkBox2.setChecked(checkBox2Checked);
+        boolean checkBox1Checked = sharedPreferences.getBoolean(CHECKBOX_FAVORITE_KEY, true);
+        boolean checkBox2Checked = sharedPreferences.getBoolean(CHECKBOX_EDIT_KEY, true);
+        checkboxFavorite.setChecked(checkBox1Checked);
+        checkBoxEdit.setChecked(checkBox2Checked);
 
     }
 

@@ -20,10 +20,14 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="menu1">Voir les miniatures</string>
-    <string name="menu2">Éditer la liste</string>
+    <string name="menu2">Éditer</string>
     <string name="btn_get_video_info">Récupérer les informations</string>
     <string name="add_consigne_1">Entrez l\'identifiant ou l\'url de la vidéo YouTube que vous voulez ajouter, et cliquez sur \"Récupérer les informations\" pour retrouver automatiquement le titre et la description.</string>
     <string name="add_consigne_2">Sélectionnez une catégorie :</string>
+    <string name="cant_launch">L\'application Youtube n\'est pas installée</string>
+    <string name="no_video_found">Pas de vidéo trouvé</string>
+    <string name="no_youtube_id_found">Video ID Youtube non trouvé</string>
+    <string name="fill_all_fields">Veuillez remplir tous le champs</string>
     <string-array name="categories">
         <item>Musique</item>
         <item>Jeux vidéo</item>

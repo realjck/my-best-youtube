@@ -65,7 +65,7 @@ public class ViewYoutubeActivity extends AppCompatActivity {
             try {
                 startActivity(intent);
             } catch(ActivityNotFoundException e) {
-                Toast.makeText(this, "YouTube app not installed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.cant_launch, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -115,14 +115,12 @@ public class ViewYoutubeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                goMainActivity();
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            goMainActivity();
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void goMainActivity() {

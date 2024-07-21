@@ -71,7 +71,7 @@ public class EditYoutubeActivity extends AppCompatActivity {
             spinnerCategory.setSelection(index);
         }
 
-        // Mets à jour au clic
+        // Met à jour la base de données au clic puis retour à l'activité principale
         btnUpdate.setOnClickListener(view -> {
             youtubeVideo.setTitle(etTitle.getText().toString());
             youtubeVideo.setDescription(etDescription.getText().toString());
@@ -83,16 +83,15 @@ public class EditYoutubeActivity extends AppCompatActivity {
         });
     }
 
+    // Retour flèche toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                goMainActivity();
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            goMainActivity();
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void goMainActivity() {
